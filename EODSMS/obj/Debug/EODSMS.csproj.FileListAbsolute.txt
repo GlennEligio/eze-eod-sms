@@ -1,0 +1,15 @@
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\bin\Debug\EODSMS.exe.config
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\bin\Debug\EODSMS.exe
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\bin\Debug\EODSMS.pdb
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\bin\Debug\MetroFramework.Design.dll
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\bin\Debug\MetroFramework.dll
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\bin\Debug\MetroFramework.Fonts.dll
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\obj\Debug\EODSMS.csproj.AssemblyReference.cache
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\obj\Debug\EODSMS.csproj.SuggestedBindingRedirects.cache
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\obj\Debug\EODSMS.EodSmsForm.resources
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\obj\Debug\EODSMS.Properties.Resources.resources
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\obj\Debug\EODSMS.csproj.GenerateResource.cache
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\obj\Debug\EODSMS.csproj.CoreCompileInputs.cache
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\obj\Debug\EODSMS.csproj.CopyComplete
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\obj\Debug\EODSMS.exe
+D:\Study\programming\Projects\eodsms\EODSMS\EODSMS\obj\Debug\EODSMS.pdb
