@@ -24,8 +24,29 @@ namespace EODSMS
             InitializeComponent();
         }
 
-        private void EodSmsForm_Load(object sender, EventArgs e)
+        private void SendThreadStart(List<BorrowEquipmentsClass> borrows)
         {
+            foreach (BorrowEquipmentsClass borrow in borrows)
+            {
+                string message = "Hi " + borrow.Borrower + " , you forgot to return the item below\n" +
+                    borrow.Equipment_Borrowed + "\n" +
+                    "Please return it tomorrow.";
+                bool success = gsmSms.Send(borrow.Student_Contact_Number, message);
+                pbEodSms.PerformStep();
+                if(success)
+                {
+                    lblMessages.Text = (Int32.Parse(lblMessages.Text) + 1).ToString();
+                }
+                Thread.Sleep(2000);
+            }
+        }
+
+        private void metroButton1_Click(object sender, EventArgs e)
+        {
+            // Setup the Control
+            lblItems.Text = 0.ToString();
+            lblMessages.Text = 0.ToString();
+
             // Setting up the GSM module
             txtBoxStatus.AppendText("Setting up GSM module\n");
             gsmSms = GSMsms.getInstance();
@@ -43,25 +64,17 @@ namespace EODSMS
             List<BorrowEquipmentsClass> borrows = repository.getBorrowEquipmentsByStatus("VERIFIED");
 
             // Found X amount of borrow transaction not returned
-            txtBoxStatus.AppendText("Found " + borrows.Count +  " amount of borrow transaction not returned\n");
+            txtBoxStatus.AppendText("Found " + borrows.Count + " amount of borrow transaction not returned\n");
+            lblItems.Text = borrows.Count.ToString();
             pbEodSms.Maximum = borrows.Count;
 
             // Sending SMS for each borrow transactions
             txtBoxStatus.AppendText("Sending SMS for each borrow transactions. Please do not close the app until it is finished");
-            Thread sendThread = new Thread(() => SendThreadStart(borrows));
-            sendThread.Start();
-        }
 
-        private void SendThreadStart(List<BorrowEquipmentsClass> borrows)
-        {
-            foreach (BorrowEquipmentsClass borrow in borrows)
+            if(gsmSms.isConnected)
             {
-                string message = "Hi " + borrow.Borrower + " , you forgot to return the item below\n" +
-                    borrow.Equipment_Borrowed + "\n" +
-                    "Please return it tomorrow.";
-                gsmSms.Send(borrow.Student_Contact_Number, message);
-                pbEodSms.PerformStep();
-                Thread.Sleep(2000);
+                Thread sendThread = new Thread(() => SendThreadStart(borrows));
+                sendThread.Start();
             }
         }
     }
