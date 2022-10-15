@@ -48,28 +48,46 @@ namespace EODSMS
             lblMessages.Text = 0.ToString();
 
             // Setting up the GSM module
-            txtBoxStatus.AppendText("Setting up GSM module\n");
+            txtBoxStatus.AppendText("Checking the GSM module connection" + Environment.NewLine);
             gsmSms = GSMsms.getInstance();
             gsmSms.Connect();
 
+            if(!gsmSms.isConnected)
+            {
+                txtBoxStatus.AppendText("GSM module not found. Check the GSM connection in the App.config file." + Environment.NewLine);
+                txtBoxStatus.AppendText("Application will now close" + Environment.NewLine);
+                Thread.Sleep(5000);
+                Application.Exit();
+                return;
+            }
+
             // Setting up the database connection
-            txtBoxStatus.AppendText("Setting up database connection\n");
+            txtBoxStatus.AppendText("Checking the database connection" + Environment.NewLine);
             string cnUrl = ConfigurationManager.ConnectionStrings["cn"].ConnectionString;
             repository = BorrowEquipmentsClassRepository.getInstance(cnUrl);
 
             pbEodSms.Value = 0;
 
             // Fetching the borrow transactions from database
-            txtBoxStatus.AppendText("Fetching the borrow transactions from database\n");
+            txtBoxStatus.AppendText("Fetching the borrow transactions from database" + Environment.NewLine);
             List<BorrowEquipmentsClass> borrows = repository.getBorrowEquipmentsByStatus("VERIFIED");
 
+            if(borrows.Count == 0)
+            {
+                txtBoxStatus.AppendText("No pending borrow transaction was found." + Environment.NewLine);
+                txtBoxStatus.AppendText("Application will now close" + Environment.NewLine);
+                Thread.Sleep(5000);
+                Application.Exit();
+                return;
+            }
+
             // Found X amount of borrow transaction not returned
-            txtBoxStatus.AppendText("Found " + borrows.Count + " amount of borrow transaction not returned\n");
+            txtBoxStatus.AppendText("Found " + borrows.Count + " amount of borrow transaction not returned" + Environment.NewLine);
             lblItems.Text = borrows.Count.ToString();
             pbEodSms.Maximum = borrows.Count;
 
             // Sending SMS for each borrow transactions
-            txtBoxStatus.AppendText("Sending SMS for each borrow transactions. Please do not close the app until it is finished");
+            txtBoxStatus.AppendText("Sending SMS for each borrow transactions. Please do not close the app until it is finished" + Environment.NewLine);
 
             if(gsmSms.isConnected)
             {
